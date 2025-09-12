@@ -14,3 +14,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `sync` command to add missing keys from `.env.example` to `.env`.
 - `tidy` command to sort keys in `.env` files.
 - `generate` command to create `.env.example` from `.env`.
+- `load` command to bulk inject configurations from a file or standard input.
