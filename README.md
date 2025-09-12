@@ -1,38 +1,38 @@
 # enity
 
-[![PyPI version](https://img.shields.io/pypi/v/enity.svg)](https://pypi.org/project/enity/)
-[![CI](https://github.com/[YOUR_GITHUB_USERNAME]/[YOUR_REPO_NAME]/actions/workflows/ci.yml/badge.svg)](https://github.com/[YOUR_GITHUB_USERNAME]/[YOUR_REPO_NAME]/actions/workflows/ci.yml)
-[![Python versions](https://img.shields.io/pypi/pyversions/enity.svg)](https://pypi.org/project/enity/)
-[![License](https://img.shields.io/pypi/l/enity.svg)](https://github.com/[YOUR_GITHUB_USERNAME]/[YOUR_REPO_NAME]/blob/main/LICENSE)
-
-A simple tool to manage your .env files.
+`enity` 是一个用于项目维护和规范化的命令行工具。
 
 ---
 
-## Installation
+## 功能
 
+-   `--version`：显示当前版本号。
+-   `check`：检查项目配置，例如自动为 `.gitignore` 添加 `.env` 规则。
+-   `generate`：从 `.env` 文件生成 `.env.example`。
+-   `sync`：将变量从 `.env.example` 同步到 `.env`。
+-   `tidy`：通过对键进行排序来整理 `.env` 文件。
+
+## 使用方法
+
+**显示版本号**
 ```bash
-pip install enity
+enity --version
 ```
 
-## Quick Start
-
-Check for discrepancies between `.env` and `.env.example`:
-
+**检查项目配置**
 ```bash
-enity check --env .env --example .env.example
+enity check
 ```
 
-Generate `.env.example` from `.env`:
-```bash
+**生成 .env.example**```bash
 enity generate
 ```
 
-Synchronize variables from `.env.example` to `.env`:
+**同步 .env 文件**
 ```bash
 enity sync
 ```
 
-Tidy up an `.env` file by sorting keys:
+**整理 .env 文件**
 ```bash
 enity tidy
