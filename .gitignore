@@ -1,2 +1,6 @@
 # Ideas
 idea
+# Ignore environment variables files
+.env
+.env.*
+!.env.example

@@ -1,13 +1,18 @@
-# main.py
 import typer
-from enity.commands.check import check
-from enity.commands.tidy import tidy
-from enity.commands.sync import sync
+from enity.commands import (
+    check as check_cmd,
+    sync as sync_cmd,
+    tidy as tidy_cmd,
+    generate as generate_cmd,
+)
 
-app = typer.Typer(help="Environment File Management Tool")
-app.add_typer(check, name="check", help="Check for missing or extra keys in .env file compared to .env.example")
-app.add_typer(tidy, name="tidy", help="Tidy .env file according to .env.example")
-app.add_typer(sync, name="sync", help="Sync .env file with .env.example by adding missing keys and optionally removing extra keys")
+app = typer.Typer(no_args_is_help=True, add_completion=False)
+
+# Register the 'check' command directly to match CLI expectations/tests.
+app.command("check")(check_cmd.check)
+app.command("sync")(sync_cmd.run)
+app.command("tidy")(tidy_cmd.run)
+app.command("generate")(generate_cmd.run)
 
 if __name__ == "__main__":
     app()
