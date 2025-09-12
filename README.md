@@ -19,14 +19,14 @@
 To install `enity` directly from the Git repository, use the following command. Please replace `<your-username>` and `<your-repo-name>` with the actual repository owner and name.
 
 ```bash
-pip install git+https://github.com/<your-username>/<your-repo-name>.git
+pip install git+https://github.com/MLGBJDLW/enity.git
 ```
 
 ### For Local Development
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/<your-username>/<your-repo-name>.git
+    git clone https://github.com/MLGBJDLW/enity.git
     cd <your-repo-name>
     ```
 2.  Install dependencies using Poetry:
@@ -85,7 +85,7 @@ enity tidy
 要直接从 Git 仓库安装 `enity`，请使用以下命令。请将 `<your-username>` 和 `<your-repo-name>` 替换为实际的仓库所有者和名称。
 
 ```bash
-pip install git+https://github.com/<your-username>/<your-repo-name>.git
+pip install git+https://github.com/MLGBJDLW/enity.git
 ```
 
 ### 本地开发安装
