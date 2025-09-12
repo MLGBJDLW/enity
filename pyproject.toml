@@ -1,0 +1,39 @@
+[project]
+name = "enity"
+version = "0.0.1"
+description = "ENV Guardian"
+authors = [
+    {name = "MLGBJDLW",email = "t13552128866@gmail.com"}
+]
+readme = "README.md"
+package = [
+    {include = "enity", from = "src"}
+]
+requires-python = ">=3.9"
+dependencies = [
+    "typer (>=0.17.4,<0.18.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)"
+]
+
+[tool.poetry]
+
+[tool.poetry.scripts]
+env-guardian = "enity.main:app"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+black = "^25.1.0"
+ruff = "^0.13.0"
+pre-commit = "^4.3.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Configuration for enity CLI defaults.
+# Override these in your project's pyproject.toml to change default paths.
+[tool.enity]
+# Path to the .env file (string)
+env_path = ".env"
+# Path to the .env.example file (string)
+example_path = ".env.example"
