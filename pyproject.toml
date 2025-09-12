@@ -20,6 +20,10 @@ enity = "enity.main:app"
 
 [tool.poetry]
 
+[tool.poetry.dependencies]
+tomli = "^2.0.1"
+pydantic = "^1.10.7"
+
 [tool.poetry.scripts]
 env-guardian = "enity.main:app"
 

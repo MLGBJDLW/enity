@@ -1,6 +1,6 @@
 # config.py
 from pathlib import Path
-from typing import Dict, Tuple, Optional, Union
+from typing import Dict, Tuple, Optional, Union, List
 
 # Try to use stdlib tomllib (Py3.11+), fall back to 'toml' package if unavailable.
 try:
@@ -8,7 +8,40 @@ try:
 except Exception:
     import toml as _toml  # type: ignore
 
+import tomli  # type: ignore
+from pydantic import BaseModel, Field
+
 _DEFAULTS = {"env_path": ".env", "example_path": ".env.example"}
+
+
+class GroupingRule(BaseModel):
+    name: str
+    keywords: List[str] = Field(default_factory=list)
+    prefixes: List[str] = Field(default_factory=list)
+
+
+class Config(BaseModel):
+    grouping_rules: Optional[Dict[str, GroupingRule]] = None
+
+
+def load_config() -> Optional[Config]:
+    """Load and validate .enity.toml from the project root.
+
+    Returns a Config instance when the file exists and parses correctly.
+    Returns an empty Config() when file missing or on parse/validation error.
+    """
+    p = Path.cwd() / ".enity.toml"
+    if not p.exists():
+        return Config()
+    try:
+        with p.open("rb") as f:
+            data = tomli.load(f)
+        # Pass top-level mapping to pydantic model
+        return Config(**data)
+    except Exception as e:
+        # Non-fatal: warn and return empty Config
+        print(f"Warning: Failed to load .enity.toml: {e}")
+        return Config()
 
 
 def _load_pyproject(path: Path) -> Dict:
