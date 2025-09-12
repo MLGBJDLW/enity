@@ -2,12 +2,52 @@
 import json
 import typer
 from pathlib import Path
-from enity.core.io import read_text
+from enity.core.io import read_text, write_text
 from enity.core.parser import keys_set_from_text
 from enity.core.exceptions import EnityError
+from enity.utils import console
 
 # Command to check for missing or extra keys in .env file compared to .env.example
 app = typer.Typer(help="Check for missing or extra keys in .env file compared to .env.example")
+
+GITIGNORE_BLOCK = [
+    "# Environments",
+    ".env",
+    ".env.*",
+    "!.env.example",
+]
+
+def ensure_gitignore_rules(gitignore_path: Path) -> bool:
+    """
+    Ensure the project .gitignore contains the required env rules.
+    Returns True if file was modified (rules appended), False if already conforms.
+    """
+    try:
+        content = read_text(gitignore_path)
+    except EnityError:
+        # File missing or unreadable — treat as empty and create it
+        content = ""
+
+    # Normalize existing lines for comparison
+    existing = {line.strip() for line in content.splitlines() if line.strip()}
+
+    missing = [ln for ln in GITIGNORE_BLOCK if ln not in existing]
+
+    if not missing:
+        console.okay(".gitignore already contains required env ignore rules")
+        return False
+
+    # Prepare addition block, avoid duplicating blank lines
+    addition_lines = GITIGNORE_BLOCK
+    addition = ("\n" if content and not content.endswith("\n") else "") + "\n".join(addition_lines) + "\n"
+
+    try:
+        write_text(gitignore_path, content + addition)
+        console.okay("Appended env ignore rules to .gitignore")
+        return True
+    except EnityError as e:
+        console.error(f"Failed to update .gitignore: {e}")
+        return False
 
 # Command to check for missing or extra keys
 @app.command()
@@ -71,6 +111,10 @@ def check(
                 typer.echo(f"Missing keys in {env_p.name}: {missing}")
             if extra:
                 typer.echo(f"Extra keys in {env_p.name}: {extra}")
+
+    # Ensure .gitignore in project root has the env rules.
+    gitignore_path = Path.cwd() / ".gitignore"
+    ensure_gitignore_rules(gitignore_path)
 
     # Exit codes: tests expect 1 for missing/extra, 0 for success
     if missing or (extra and strict_extra):
