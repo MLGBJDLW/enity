@@ -38,7 +38,7 @@ def suggest_layout(env_file: str = "./.env.example"):
     assigned_variables = set()
 
     # First pass: apply custom rules (prefixes and keywords)
-    for rule in rules.values() if isinstance(rules, dict) else []:
+    for rule in rules.values():
         name = rule.name
         prefixes = [p.upper() for p in (rule.prefixes or [])]
         keywords = [k.upper() for k in (rule.keywords or [])]

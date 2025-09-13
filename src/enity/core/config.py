@@ -2,12 +2,7 @@
 from pathlib import Path
 from typing import Dict, Tuple, Optional, Union, List
 
-# Try to use stdlib tomllib (Py3.11+), fall back to 'toml' package if unavailable.
-try:
-    import tomllib as _toml  # type: ignore
-except Exception:
-    import toml as _toml  # type: ignore
-
+# Use tomli for all TOML parsing (project uses tomli in pyproject.toml)
 import tomli  # type: ignore
 from pydantic import BaseModel, Field
 
@@ -47,13 +42,13 @@ def load_config() -> Optional[Config]:
 def _load_pyproject(path: Path) -> Dict:
     if not path.exists():
         return {}
-    # tomllib wants binary mode, toml lib wants text mode; try binary first.
+    # tomli prefers binary mode; try binary first, then fall back to text mode.
     try:
         with path.open("rb") as f:
-            data = _toml.load(f)
+            data = tomli.load(f)
     except Exception:
         with path.open("r", encoding="utf-8") as f:
-            data = _toml.load(f)
+            data = tomli.loads(f.read())
     return data.get("tool", {}).get("enity", {})
 
 
