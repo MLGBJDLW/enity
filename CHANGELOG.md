@@ -15,3 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tidy` command to sort keys in `.env` files.
 - `generate` command to create `.env.example` from `.env`.
 - `load` command to bulk inject configurations from a file or standard input.
+- `suggest-layout` command to intelligently suggest a functional grouping for .env files based on custom rules and keyword analysis.

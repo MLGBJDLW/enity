@@ -12,13 +12,19 @@ package = [
 requires-python = ">=3.9"
 dependencies = [
     "typer (>=0.17.4,<0.18.0)",
-    "python-dotenv (>=1.1.1,<2.0.0)"
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "tomli (^2.0.1)",
+    "pydantic (^1.10.7)",
 ]
 
 [project.scripts]
 enity = "enity.main:app"
 
 [tool.poetry]
+
+[tool.poetry.dependencies]
+tomli = "^2.0.1"
+pydantic = "^1.10.7"
 
 [tool.poetry.scripts]
 env-guardian = "enity.main:app"

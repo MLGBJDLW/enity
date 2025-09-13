@@ -12,6 +12,7 @@
 -   `sync`: Synchronize variables from `.env.example` to `.env`.
 -   `tidy`: Tidy up the `.env` file by sorting its keys.
 -   `load`: Bulk inject configurations from a file or standard input, and automatically trigger `tidy` and `generate`.
+-   `suggest-layout`: Intelligently suggest a functional grouping for `.env` files to improve readability.
 
 ## Installation
 
@@ -77,6 +78,35 @@ The `load` command allows you to bulk inject configurations from a file or stand
     ```
 
 ---
+
+**Suggest a Grouped Layout for .env Files**
+
+The `suggest-layout` command intelligently suggests a grouped layout for your `.env` file, making it more readable and organized.
+
+-   **Basic Usage:**
+    ```bash
+    enity suggest-layout [FILE_PATH]
+    ```
+    If `FILE_PATH` is not provided, it defaults to `.env.example`.
+
+-   **Custom Grouping with `.enity.toml`:**
+    You can define custom grouping rules by creating an `.enity.toml` file in your project's root directory.
+
+    *Example `.enity.toml`:*
+    ```toml
+    # .enity.toml
+
+    [grouping_rules]
+    # Defines a group named "Clerk Authentication"
+    clerk = { name = "Clerk Authentication", keywords = ["CLERK"] }
+
+    # Defines a group named "Database"
+    database = { name = "Database", prefixes = ["DB_"], keywords = ["DATABASE"] }
+    ```
+
+-   **Intelligent Fallback:**
+    If `.enity.toml` does not exist or fails to cover all variables, the command automatically uses a keyword-based smart grouping algorithm as a fallback.
+
 ---
 
 # enity (中文)
@@ -93,6 +123,7 @@ The `load` command allows you to bulk inject configurations from a file or stand
 -   `sync`：将变量从 `.env.example` 同步到 `.env`。
 -   `tidy`：通过对键进行排序来整理 `.env` 文件。
 -   `load`：从文件或标准输入批量注入配置，并自动触发 `tidy` 和 `generate`。
+-   `suggest-layout`：为 `.env` 文件智能建议一个按功能分组的布局，以提高可读性。
 
 ## 安装说明
 
@@ -141,3 +172,32 @@ enity sync
 **整理 .env 文件**
 ```bash
 enity tidy
+```
+
+**为 .env 文件建议分组布局**
+
+`suggest-layout` 命令会智能地为您的 `.env` 文件建议一个分组布局，使其更具可读性和组织性。
+
+-   **基本用法：**
+    ```bash
+    enity suggest-layout [FILE_PATH]
+    ```
+    如果未提供 `FILE_PATH`，则默认为 `.env.example`。
+
+-   **使用 `.enity.toml` 自定义分组：**
+    您可以通过在项目根目录中创建一个 `.enity.toml` 文件来定义自定义分组规则。
+
+    *`.enity.toml` 示例：*
+    ```toml
+    # .enity.toml
+
+    [grouping_rules]
+    # 定义一个名为 "Clerk Authentication" 的分组
+    clerk = { name = "Clerk Authentication", keywords = ["CLERK"] }
+
+    # 定义一个名为 "Database" 的分组
+    database = { name = "Database", prefixes = ["DB_"], keywords = ["DATABASE"] }
+    ```
+
+-   **智能回退机制：**
+    如果 `.enity.toml` 文件不存在或未能覆盖所有变量，该命令会自动使用基于关键字的智能分组算法作为备用方案。

@@ -6,6 +6,7 @@ from enity.commands import (
     sync as sync_cmd,
     tidy as tidy_cmd,
     generate as generate_cmd,
+    suggest_layout as suggest_layout_cmd,
 )
 
 app = typer.Typer(no_args_is_help=True, add_completion=False)
@@ -52,6 +53,7 @@ app.command("check")(check_cmd.check)
 app.command("sync")(sync_cmd.run)
 app.command("tidy")(tidy_cmd.run)
 app.command("generate")(generate_cmd.run)
+app.command("suggest-layout")(suggest_layout_cmd.suggest_layout)
 
 if __name__ == "__main__":
     app()
